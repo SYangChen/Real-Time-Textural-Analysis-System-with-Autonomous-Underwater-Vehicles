@@ -2,10 +2,10 @@
 This is the system which recognize the textural underwater.
 
 # Environment
-python3
-verilog
-petalinux-Xilinx
-ZC-706 FPGa board
+###### python3
+###### verilog
+###### petalinux-Xilinx
+###### ZC-706 FPGa board
 
 # Co-Author
 陳少洋 / github : SYangChen
