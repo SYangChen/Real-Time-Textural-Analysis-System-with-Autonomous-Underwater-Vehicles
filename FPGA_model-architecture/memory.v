@@ -1,16 +1,15 @@
-module memory( reset, en, r_w, abus, insign, indata, dbus_in1, dbus_in2, dbus_in3, dbus_in4, dbus_in5, dbus_in6, dbus_in7, dbus_in8, dbus_in9, dbus_in10, dbus_in11, dbus_in12, dbus_in13, dbus_in14, dbus_in15, dbus_in16, dbus_in17, dbus_in18, dbus_in19,  dbus_in20, dbus_in21, dbus_in22, dbus_in23, dbus_in24, dbus_in25, dbus_in26, dbus_in27, dbus_in28, dbus_in29, dbus_in30, dbus_in31, dbus_in32, dbus_in33, dbus_in34, dbus_in35, dbus_in36, dbus_in37, dbus_in38, dbus_in39, dbus_in40, dbus_in41, dbus_in42, dbus_in43, dbus_in44, dbus_in45, dbus_in46, dbus_in47, dbus_in48, dbus_in49, dbus_in50, dbus_out1, dbus_out2, dbus_out3, dbus_out4, dbus_out5, dbus_out6, dbus_out7, dbus_out8, dbus_out9, dbus_out10, dbus_out11, dbus_out12, dbus_out13, dbus_out14, dbus_out15, dbus_out16, dbus_out17, dbus_out18, dbus_out19,  dbus_out20, dbus_out21, dbus_out22, dbus_out23, dbus_out24, dbus_out25, dbus_out26, dbus_out27, dbus_out28, dbus_out29, dbus_out30, dbus_out31, dbus_out32, dbus_out33, dbus_out34, dbus_out35, dbus_out36, dbus_out37, dbus_out38, dbus_out39, dbus_out40, dbus_out41, dbus_out42, dbus_out43, dbus_out44, dbus_out45, dbus_out46, dbus_out47, dbus_out48, dbus_out49, dbus_out50 ) ;
-	input reset, en, r_w, insign ;
+module memory( rst, clk, en, r_w, abus, insign, indata, dbus_in1, dbus_in2, dbus_in3, dbus_in4, dbus_in5, dbus_in6, dbus_in7, dbus_in8, dbus_in9, dbus_in10, dbus_in11, dbus_in12, dbus_in13, dbus_in14, dbus_in15, dbus_in16, dbus_in17, dbus_in18, dbus_in19,  dbus_in20, dbus_in21, dbus_in22, dbus_in23, dbus_in24, dbus_in25, dbus_in26, dbus_in27, dbus_in28, dbus_in29, dbus_in30, dbus_in31, dbus_in32, dbus_in33, dbus_in34, dbus_in35, dbus_in36, dbus_in37, dbus_in38, dbus_in39, dbus_in40, dbus_in41, dbus_in42, dbus_in43, dbus_in44, dbus_in45, dbus_in46, dbus_in47, dbus_in48, dbus_in49, dbus_in50, dbus_out1, dbus_out2, dbus_out3, dbus_out4, dbus_out5, dbus_out6, dbus_out7, dbus_out8, dbus_out9, dbus_out10, dbus_out11, dbus_out12, dbus_out13, dbus_out14, dbus_out15, dbus_out16, dbus_out17, dbus_out18, dbus_out19,  dbus_out20, dbus_out21, dbus_out22, dbus_out23, dbus_out24, dbus_out25, dbus_out26, dbus_out27, dbus_out28, dbus_out29, dbus_out30, dbus_out31, dbus_out32, dbus_out33, dbus_out34, dbus_out35, dbus_out36, dbus_out37, dbus_out38, dbus_out39, dbus_out40, dbus_out41, dbus_out42, dbus_out43, dbus_out44, dbus_out45, dbus_out46, dbus_out47, dbus_out48, dbus_out49, dbus_out50 ) ;
+	input rst, clk, en, r_w, insign ;
 	input [15:0] abus ;
 	input [7:0] indata, dbus_in1, dbus_in2, dbus_in3, dbus_in4, dbus_in5, dbus_in6, dbus_in7, dbus_in8, dbus_in9, dbus_in10, dbus_in11, dbus_in12, dbus_in13, dbus_in14, dbus_in15, dbus_in16, dbus_in17, dbus_in18, dbus_in19,  dbus_in20, dbus_in21, dbus_in22, dbus_in23, dbus_in24, dbus_in25, dbus_in26, dbus_in27, dbus_in28, dbus_in29, dbus_in30, dbus_in31, dbus_in32, dbus_in33, dbus_in34, dbus_in35, dbus_in36, dbus_in37, dbus_in38, dbus_in39, dbus_in40, dbus_in41, dbus_in42, dbus_in43, dbus_in44, dbus_in45, dbus_in46, dbus_in47, dbus_in48, dbus_in49, dbus_in50 ;
 	output reg [7:0] dbus_out1, dbus_out2, dbus_out3, dbus_out4, dbus_out5, dbus_out6, dbus_out7, dbus_out8, dbus_out9, dbus_out10, dbus_out11, dbus_out12, dbus_out13, dbus_out14, dbus_out15, dbus_out16, dbus_out17, dbus_out18, dbus_out19,  dbus_out20, dbus_out21, dbus_out22, dbus_out23, dbus_out24, dbus_out25, dbus_out26, dbus_out27, dbus_out28, dbus_out29, dbus_out30, dbus_out31, dbus_out32, dbus_out33, dbus_out34, dbus_out35, dbus_out36, dbus_out37, dbus_out38, dbus_out39, dbus_out40, dbus_out41, dbus_out42, dbus_out43, dbus_out44, dbus_out45, dbus_out46, dbus_out47, dbus_out48, dbus_out49, dbus_out50 ;
 	
 	reg [7:0] m [0:2047] ;
 	reg [7:0] data ;
-	reg [7:0] i ;
 
-    always @( * ) 
+    always @( posedge clk or posedge rst or posedge en or abus ) 
     begin
-        if ( reset == 1 )
+        if ( rst == 1 )
         begin
             m[1000] = 8'h10 ;
 			m[1101] = 8'h10 ;

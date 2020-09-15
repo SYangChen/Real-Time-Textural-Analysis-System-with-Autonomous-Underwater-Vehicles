@@ -204,13 +204,13 @@ module nnctrl_tb ;
 			#200 count = 19 ;
 			#200 count = 20 ;
 		end
-		#4600 count = 0 ;
+		#4800 count = 0 ;
 		#200 count = 1 ;
 		#200 count = 2 ;
-		#800 count = 0 ;
+		#1000 count = 0 ;
 		#200 count = 1 ;
 		#200 count = 2 ;
-		#800 $stop ;
+		#1000 $stop ;
 	end
 	always #100 clock = clock + 1; 
 
