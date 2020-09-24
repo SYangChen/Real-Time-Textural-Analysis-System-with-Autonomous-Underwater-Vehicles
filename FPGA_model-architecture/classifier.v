@@ -1,3 +1,4 @@
+`timescale 1ns/10ps
 `define WIDTH 32
 
 module classfier ( rst, enable, data1, data2, category ) ;
@@ -6,7 +7,7 @@ module classfier ( rst, enable, data1, data2, category ) ;
 	input [7:0] data1, data2 ;
 	output reg category ;
 
-	always@( enable or posedge rst ) begin
+	always@( posedge enable or posedge rst ) begin
 		if ( rst )
 			category = 1'bz ;
 		else
