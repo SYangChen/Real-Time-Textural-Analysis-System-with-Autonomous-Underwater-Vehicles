@@ -4,7 +4,7 @@
 module classfier ( rst, enable, data1, data2, category ) ;
 
 	input rst, enable ;
-	input [7:0] data1, data2 ;
+	input [15:0] data1, data2 ;
 	output reg category ;
 
 	always@( posedge enable or posedge rst ) begin
