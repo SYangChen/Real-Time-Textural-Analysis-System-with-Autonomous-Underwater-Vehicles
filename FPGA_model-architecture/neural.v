@@ -1,26 +1,30 @@
 `define WIDTH 32
 
-module neural ( rst, clk, zero, last_data, isbias, input_data1, weight_data1, output_data ) ;
+module neural ( rst, clk, zero, last_data, isbias, input_data, weight_data, output_data ) ;
 
 	input rst, clk, isbias, zero ;
 	input [15:0] last_data ;
-	input [15:0] input_data1 ;
-	input [15:0] weight_data1 ;
-	reg [31:0] output_temp ;
-	reg [7:0] a, b ;
+	input [15:0] input_data ;
+	input [15:0] weight_data ;
 	output reg [15:0] output_data ;
+
+	reg a ;
+	reg [14:0] b ;
 
 	always@( posedge clk or posedge rst ) begin
 		// a = 4'b0 ;
 		// b = 4'b0 ;
-		if ( rst )
+		if ( rst ) begin
 			output_data <= 0 ;
+			a = 1'b0 ;
+			b = 15'd0 ;
+		end
 		else
 		begin
 			if ( zero == 1'b1 )
 				output_data <= 0 ;
-			if ( isbias == 1'b1 ) begin
-				{ a, output_data, b } <= 16'b0100*weight_data+{ a, last_data, b } ;
+			else if ( isbias == 1'b1 ) begin
+				output_data <= last_data+weight_data ;
 				// output_temp = input_data1*weight_data1 ;
 			end
 			else begin
