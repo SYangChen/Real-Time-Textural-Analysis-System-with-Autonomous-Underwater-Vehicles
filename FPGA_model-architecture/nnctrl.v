@@ -5,26 +5,26 @@ module nnctrl ( reset, clk, input_signal, in, category ) ;
 	
 	input 		reset, clk ;
 	input		input_signal ;
-	input[15:0] in ;
+	input[31:0] in ;
 	output 		category ;
 	
-	wire[15:0]	doutin ;	// wire
-	reg			ena, wea ;
+	wire[31:0]	doutin ;	// wire
+	reg			wea ;
 	reg[10:0]	addrRAM ;
 	
-	wire[15:0]	doutweib ;
+	wire[31:0]	doutweib ;
 	reg[16:0]	addrROM ;
 	
-	wire[15:0]	curResult ;	// wire
+	wire[31:0]	curResult ;	// wire
 	reg			isBias ;
 	
 	reg 		enClassfy, zero, isInput ;
-	reg[15:0]	dataA, dataB ;
+	reg[31:0]	dataA, dataB ;
 	reg[2:0]	layer ;
 	reg[6:0]	count ;
 	reg[2:0]	delay ;
 	
-	BMG_RAM ram ( .clka(clk), .ena(ena), .wea(wea), .addra(addrRAM), .dina(dataA), .douta(doutin) ) ;
+	BMG_RAM ram ( .clka(clk), .wea(wea), .addra(addrRAM), .dina(dataA), .douta(doutin) ) ;
 	BMG_ROM rom ( .clka(clk), .addra(addrROM), .douta(doutweib) ) ;
 	neural aNeural ( reset, clk, zero, curResult, isBias, doutin, doutweib, curResult ) ;
 	classfier classfier ( reset, enClassfy, dataA, dataB, category ) ;
@@ -41,15 +41,14 @@ module nnctrl ( reset, clk, input_signal, in, category ) ;
 	always@( posedge reset or posedge clk ) begin
 		// excute next
 		if ( reset ) begin
-			ena <= 1'b1 ;		// enable
 			wea <= 1'b1 ;		// write
 			addrRAM <= 11'd0 ;
 			addrROM <= 17'd0 ;
 			isBias <= 1'b0 ;
 			enClassfy <= 1'b0 ;
 			zero <= 1'b1 ;
-			dataA <= 16'd0 ;
-			dataB <= 16'd0 ;
+			dataA <= 32'd0 ;
+			dataB <= 32'd0 ;
 			layer <= 2'd0 ;
 			isInput <= 1'b0 ;
 			count <= 10'd0 ;
@@ -192,15 +191,14 @@ module nnctrl ( reset, clk, input_signal, in, category ) ;
 					delay <= delay-1 ;
 				else begin
 					$stop ;
-					ena <= 1'b1 ;		// enable
 					wea <= 1'b1 ;		// write
 					addrRAM <= 11'd0 ;
 					addrROM <= 17'd0 ;
 					isBias <= 1'b0 ;
 					enClassfy <= 1'b0 ;
 					zero <= 1'b1 ;
-					dataA <= 16'd0 ;
-					dataB <= 16'd0 ;
+					dataA <= 32'd0 ;
+					dataB <= 32'd0 ;
 					layer <= 2'd0 ;
 					isInput <= 1'b0 ;
 					count <= 10'd0 ;
