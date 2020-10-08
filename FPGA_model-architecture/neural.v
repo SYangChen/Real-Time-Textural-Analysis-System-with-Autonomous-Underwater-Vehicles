@@ -31,7 +31,7 @@ module neural ( rst, clk, zero, last_data, isbias, input_data, weight_data, outp
 				// output_temp = input_data1*weight_data1 ;
 			end
 			else begin
-				{ a, output_data, b } <= input_data*weight_data+{ 1'b0, last_data, 31'd0 } ;
+				{ a, output_data, b } <= { {16{input_data[31]}}, input_data }*{ {16{weight_data[31]}}, weight_data }+{ last_data[31], last_data, 31'd0 } ;
 				// output_temp = input_data1*weight_data1 ;
 			end
 			// output_data = output_temp[11:4]+last_data ;
