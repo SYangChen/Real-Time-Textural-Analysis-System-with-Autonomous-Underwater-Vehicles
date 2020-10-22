@@ -6,7 +6,7 @@ This is the system which recognize the textural underwater.
 ###### verilog
 ###### petalinux-Xilinx
 ###### ZC-706 FPGA board
-###### 
+###### ArchlinuxARM
 
 # Co-Author
 陳少洋 / github : SYangChen
